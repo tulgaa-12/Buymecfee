@@ -22,7 +22,7 @@ type Next = {
 
 export const Signup = ({ nextStep }: Next) => {
   const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    username: z.string().min(4).max(50),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
