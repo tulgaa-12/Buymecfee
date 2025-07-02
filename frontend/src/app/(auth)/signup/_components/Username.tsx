@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import axios from "axios";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -22,15 +23,16 @@ import { useRouter } from "next/navigation";
 
 type Next = {
   nextStep: () => void;
+  usersname: string;
 };
 
-export const Username = ({ nextStep }: Next) => {
+export const Username = ({ nextStep, usersname }: Next) => {
   const router = useRouter();
   const formSchema = z.object({
     email: z
       .string()
       .min(10, "username is required")
-      .max(20)
+      .max(40)
       .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
     password: z.string().min(8, "password is required").max(20),
   });
@@ -43,9 +45,33 @@ export const Username = ({ nextStep }: Next) => {
     },
   });
 
-  const HandleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    router.push("/Profile");
+  const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const dataToSend = {
+        email: values.email,
+        password: values.password,
+        username: usersname,
+      };
+
+      const response = await axios.post(
+        "http://localhost:8000/user/sign-up",
+        dataToSend
+      );
+      if (response.status === 201 || response.status === 200) {
+        console.log("User created:", response.data);
+
+        router.push("/Profile");
+      } else {
+        console.error("Signup failed:", response.data);
+        alert("Signup failed");
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.error || "Signup error");
+      } else {
+        alert("Network error");
+      }
+    }
   };
 
   return (
@@ -60,8 +86,7 @@ export const Username = ({ nextStep }: Next) => {
         <Form {...form}>
           <form
             className="space-y-8  "
-            onSubmit={form.handleSubmit(HandleSubmit)}
-          >
+            onSubmit={form.handleSubmit(HandleSubmit)}>
             <FormField
               control={form.control}
               name="email"

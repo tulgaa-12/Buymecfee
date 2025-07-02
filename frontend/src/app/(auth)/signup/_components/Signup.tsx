@@ -15,12 +15,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import axios from "axios";
+import { useState } from "react";
 type Next = {
   nextStep: () => void;
+  setUsername: (name: string) => void;
 };
 
-export const Signup = ({ nextStep }: Next) => {
+export const Signup = ({ nextStep, setUsername }: Next) => {
   const formSchema = z.object({
     username: z.string().min(4).max(50),
   });
@@ -32,9 +34,10 @@ export const Signup = ({ nextStep }: Next) => {
     },
   });
 
-  const HandleSubmit = (values: z.infer<typeof formSchema>) => {
-    nextStep();
+  const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+    setUsername(values.username);
     console.log(values);
+    nextStep();
   };
 
   return (
@@ -48,8 +51,7 @@ export const Signup = ({ nextStep }: Next) => {
       <Form {...form}>
         <form
           className="space-y-8  "
-          onSubmit={form.handleSubmit(HandleSubmit)}
-        >
+          onSubmit={form.handleSubmit(HandleSubmit)}>
           <FormField
             control={form.control}
             name="username"

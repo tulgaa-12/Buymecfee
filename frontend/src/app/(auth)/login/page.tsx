@@ -18,6 +18,7 @@ import { Username } from "../signup/_components/Username";
 import { email } from "zod/v4-mini";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 const LoginHome = () => {
   const formSchema = z.object({
     email: z.string().min(8).max(50),
@@ -32,9 +33,21 @@ const LoginHome = () => {
     },
   });
   const router = useRouter();
-  const HandleSubmit = (values: z.infer<typeof formSchema>) => {
-    router.push("/");
-    console.log(values);
+  const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/user/login",
+        values
+      );
+      if (response.status === 200) {
+        router.push("/");
+        console.log("Login successful", response.data);
+      } else {
+        alert("Login failed");
+      }
+    } catch (error) {
+      console.log("aldaa garlaa", error);
+    }
   };
   return (
     <div className=" w-1/2 h-screen flex flex-col justify-center items-center gap-5">
@@ -45,8 +58,7 @@ const LoginHome = () => {
         <Form {...form}>
           <form
             className="space-y-8  "
-            onSubmit={form.handleSubmit(HandleSubmit)}
-          >
+            onSubmit={form.handleSubmit(HandleSubmit)}>
             <FormField
               control={form.control}
               name="email"
