@@ -13,19 +13,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
-import { Camera, PhoneOutgoing, X } from "lucide-react";
-import next from "next";
+import axios from "axios";
+import { Camera } from "lucide-react";
+
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { file } from "zod/v4-mini";
 
+import { useAuth } from "@/app/_components/UserProvider";
 type all = {
   Next: () => void;
 };
 
 export const CompleteProfile = ({ Next }: all) => {
+  const { user } = useAuth();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const formSchema = z.object({
     file: z.any(),
@@ -54,8 +56,56 @@ export const CompleteProfile = ({ Next }: all) => {
     },
   });
 
-  const HandleSubmit = (values: z.infer<typeof formSchema>) => {
+  const uploadImage = async () => {
+    if (!selectedImage) {
+      alert("Please select a file");
+      return null;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedImage);
+    formData.append("upload_preset", "food-delivery");
+
     try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dip9rajob/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const result = await response.json();
+      return result.secure_url;
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+      return null;
+    }
+  };
+
+  const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const userId = localStorage.getItem("userId");
+    const imageUrl = await uploadImage();
+    if (!imageUrl) return;
+
+    const profileData = {
+      name: values.name,
+      about: values.about,
+      avatarImage: imageUrl,
+      socialMediaURL: values.url,
+      userId: userId,
+    };
+
+    try {
+      const res = await axios.post("http://localhost:8000/profile", {
+        data: {
+          name: values.name,
+          about: values.about,
+          avatarImage: imageUrl,
+          socialMediaURL: values.url,
+          userId: userId,
+        },
+      });
     } catch (err) {
       console.log(err, "errorr");
     }

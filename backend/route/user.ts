@@ -6,7 +6,6 @@ import { Hello, signup } from "../controller/user/signup";
 export const UserRouter = Router();
 UserRouter.get("/", Hello);
 UserRouter.post("/sign-up", signup);
-UserRouter.post("/login", login);
 
 UserRouter.get("/profile", protect, (req, res) => {
   res.json({ user: req.user });

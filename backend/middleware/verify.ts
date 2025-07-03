@@ -11,7 +11,7 @@ declare global {
 }
 
 interface JwtPayload {
-  userId: number;
+  userId: string;
 }
 dotenv.config();
 export const protect = async (

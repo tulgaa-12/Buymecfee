@@ -57,9 +57,10 @@ export const Username = ({ nextStep, usersname }: Next) => {
         "http://localhost:8000/user/sign-up",
         dataToSend
       );
-      if (response.status === 201 || response.status === 200) {
-        console.log("User created:", response.data);
 
+      if (response.status === 201 && response.data?.id) {
+        const userId = response.data.id;
+        localStorage.setItem("userId", userId);
         router.push("/Profile");
       } else {
         console.error("Signup failed:", response.data);
