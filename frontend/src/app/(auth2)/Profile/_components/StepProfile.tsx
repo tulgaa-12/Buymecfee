@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export const StepProfile = () => {
   const formSchema = z.object({
@@ -44,7 +45,7 @@ export const StepProfile = () => {
     firstname: z.string().min(3).max(20),
     lastname: z.string().min(3).max(20),
     card: z.string().min(10).max(20),
-    expires: z.string().min(4),
+    expires: z.string().min(2),
     year: z.string().min(4),
     cvc: z.string().min(4),
   });
@@ -52,7 +53,6 @@ export const StepProfile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      select: undefined,
       firstname: "",
       lastname: "",
       card: "",
@@ -63,7 +63,26 @@ export const StepProfile = () => {
   });
 
   const router = useRouter();
-  const HandleSubmit = (values: z.infer<typeof formSchema>) => {
+  const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      console.error("User ID not found");
+      return;
+    }
+    try {
+      const res = await axios.post("http://localhost:8000/createBankCard", {
+        select: values.select,
+        firstname: values.firstname,
+        lastname: values.lastname,
+        card: values.card,
+        expires: values.expires,
+        year: values.year,
+        cvc: values.cvc,
+        userId: parseInt(userId!),
+      });
+    } catch (err) {
+      console.log({ message: "aldaagar" });
+    }
     router.push("/");
     console.log(values);
   };
@@ -81,8 +100,7 @@ export const StepProfile = () => {
       <Form {...form}>
         <form
           className="space-y-8  "
-          onSubmit={form.handleSubmit(HandleSubmit)}
-        >
+          onSubmit={form.handleSubmit(HandleSubmit)}>
           <FormField
             control={form.control}
             name="select"

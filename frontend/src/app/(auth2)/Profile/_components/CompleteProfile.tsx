@@ -88,24 +88,21 @@ export const CompleteProfile = ({ Next }: all) => {
     const imageUrl = await uploadImage();
     if (!imageUrl) return;
 
-    const profileData = {
-      name: values.name,
-      about: values.about,
-      avatarImage: imageUrl,
-      socialMediaURL: values.url,
-      userId: userId,
-    };
-
     try {
       const res = await axios.post("http://localhost:8000/profile", {
-        data: {
-          name: values.name,
-          about: values.about,
-          avatarImage: imageUrl,
-          socialMediaURL: values.url,
-          userId: userId,
-        },
+        name: values.name,
+        about: values.about,
+        avatarImage: imageUrl,
+        socialMediaURL: values.url,
+        backgroundImage: "https://example.com/default-bg.jpg",
+        successMessage: "Profile completed successfully!",
+        userId: parseInt(userId!),
       });
+
+      if (!userId) {
+        console.error("User ID not found");
+        return;
+      }
     } catch (err) {
       console.log(err, "errorr");
     }

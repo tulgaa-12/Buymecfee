@@ -33,20 +33,43 @@ const LoginHome = () => {
     },
   });
   const router = useRouter();
+  // const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8000/user/login",
+  //       values
+  //     );
+  //     if (response.status === 200) {
+  //       router.push("/");
+  //       console.log("Login successful", response.data);
+  //     } else {
+  //       alert("Login failed");
+  //     }
+  //   } catch (error) {
+  //     console.log("aldaa garlaa", error);
+  //   }
+  // };
   const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/user/login",
         values
       );
-      if (response.status === 200) {
+
+      if (response.status === 200 && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", String(response.data.user.id));
         router.push("/");
-        console.log("Login successful", response.data);
       } else {
         alert("Login failed");
       }
-    } catch (error) {
-      console.log("aldaa garlaa", error);
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.error || "Login failed");
+      } else {
+        alert("Network error");
+      }
+      console.error("Login error:", error);
     }
   };
   return (

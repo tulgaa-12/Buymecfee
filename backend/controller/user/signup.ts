@@ -16,19 +16,16 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password, username } = req.body;
 
-    // if (!email || !password || !username) {
-    //   res
-    //     .status(400)
-    //     .json({ error: "Email, password and username are required" });
-    //   return;
-    // }
+    if (!email || !password || !username) {
+      res
+        .status(400)
+        .json({ error: "Email, password and username are required" });
+      return;
+    }
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
 
-    // const existingUserByUsername = await prisma.user.findUnique({
-    //   where: { username },
-    // });
     if (existingUser) {
       res.status(400).json({ error: "User already exists" });
       return;
