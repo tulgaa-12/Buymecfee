@@ -55,6 +55,10 @@ export const CompleteProfile = ({ Next }: all) => {
   });
 
   const HandleSubmit = (values: z.infer<typeof formSchema>) => {
+    try {
+    } catch (err) {
+      console.log(err, "errorr");
+    }
     Next();
     console.log(values);
   };
@@ -71,8 +75,7 @@ export const CompleteProfile = ({ Next }: all) => {
         <Form {...form}>
           <form
             className="space-y-8"
-            onSubmit={form.handleSubmit(HandleSubmit)}
-          >
+            onSubmit={form.handleSubmit(HandleSubmit)}>
             <FormField
               control={form.control}
               name="file"
@@ -105,8 +108,7 @@ export const CompleteProfile = ({ Next }: all) => {
                       ) : (
                         <Label
                           htmlFor="image"
-                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  "
-                        >
+                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  ">
                           <span className="w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center">
                             <Camera className="text-[#E4E4E7]" />
                           </span>
