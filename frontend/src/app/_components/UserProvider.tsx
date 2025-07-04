@@ -6,6 +6,7 @@ import {
   useState,
   useContext,
 } from "react";
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -24,6 +25,7 @@ export const AuthContext = createContext<AuthContextType>(
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<UserData | null>(null);
+
   const router = useRouter();
 
   const tokenChecker = async (token: string) => {
@@ -32,12 +34,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         token: token,
       });
       setUser({
-        userId: response.data.user.userId,
+        userId: response.data.destruck.userId,
       });
     } catch (err) {
-      console.log("Token check failed:", err);
-      localStorage.removeItem("token");
-      router.push("/login");
+      console.log(err);
     }
   };
 

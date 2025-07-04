@@ -14,9 +14,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Username } from "../signup/_components/Username";
-import { email } from "zod/v4-mini";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 import axios from "axios";
 const LoginHome = () => {
@@ -33,22 +31,7 @@ const LoginHome = () => {
     },
   });
   const router = useRouter();
-  // const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/user/login",
-  //       values
-  //     );
-  //     if (response.status === 200) {
-  //       router.push("/");
-  //       console.log("Login successful", response.data);
-  //     } else {
-  //       alert("Login failed");
-  //     }
-  //   } catch (error) {
-  //     console.log("aldaa garlaa", error);
-  //   }
-  // };
+
   const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post(
@@ -58,16 +41,18 @@ const LoginHome = () => {
 
       if (response.status === 200 && response.data.token) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", String(response.data.user.id));
-        router.push("/");
-      } else {
-        alert("Login failed");
+        localStorage.setItem("userId", response.data.user.id);
+
+        localStorage.setItem("token", response.data.token);
+        if (response.status === 200) {
+          router.push("/");
+        } else {
+          alert("Login failed");
+        }
       }
     } catch (error: any) {
       if (error.response) {
         alert(error.response.data.error || "Login failed");
-      } else {
-        alert("Network error");
       }
       console.error("Login error:", error);
     }
@@ -81,7 +66,8 @@ const LoginHome = () => {
         <Form {...form}>
           <form
             className="space-y-8  "
-            onSubmit={form.handleSubmit(HandleSubmit)}>
+            onSubmit={form.handleSubmit(HandleSubmit)}
+          >
             <FormField
               control={form.control}
               name="email"
@@ -126,5 +112,4 @@ const LoginHome = () => {
     </div>
   );
 };
-
 export default LoginHome;

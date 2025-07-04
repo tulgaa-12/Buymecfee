@@ -34,14 +34,7 @@ import axios from "axios";
 
 export const StepProfile = () => {
   const formSchema = z.object({
-    select: z.any(),
-    // .enum([
-    //   "United States",
-    //   "Australia",
-    //   "Mongolia",
-    //   "New Zealand",
-    //   "other",
-    // ]),
+    select: z.string().min(1),
     firstname: z.string().min(3).max(20),
     lastname: z.string().min(3).max(20),
     card: z.string().min(10).max(20),
@@ -80,11 +73,11 @@ export const StepProfile = () => {
         cvc: values.cvc,
         userId: parseInt(userId!),
       });
+
+      router.push("/");
     } catch (err) {
       console.log({ message: "aldaagar" });
     }
-    router.push("/");
-    console.log(values);
   };
 
   return (
@@ -100,7 +93,8 @@ export const StepProfile = () => {
       <Form {...form}>
         <form
           className="space-y-8  "
-          onSubmit={form.handleSubmit(HandleSubmit)}>
+          onSubmit={form.handleSubmit(HandleSubmit)}
+        >
           <FormField
             control={form.control}
             name="select"
@@ -108,7 +102,7 @@ export const StepProfile = () => {
               <FormItem className="flex flex-col gap-10">
                 <FormLabel>Select country</FormLabel>
                 <FormControl>
-                  <Select {...field}>
+                  <Select onValueChange={field.onChange}>
                     <SelectTrigger className="w-[510px]">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>

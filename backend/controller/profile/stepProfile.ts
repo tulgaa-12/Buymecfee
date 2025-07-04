@@ -9,20 +9,6 @@ export const createBankCard = async (
     const { select, firstname, lastname, card, expires, year, cvc, userId } =
       req.body;
 
-    if (
-      !select ||
-      !firstname ||
-      !lastname ||
-      !card ||
-      !expires ||
-      !year ||
-      !cvc ||
-      !userId
-    ) {
-      res.status(400).json({ error: "Missing required fields" });
-      return;
-    }
-
     const expiryDateString = `${year}-${expires.padStart(2, "0")}-01`;
     const expiryDate = new Date(expiryDateString);
 
@@ -45,3 +31,17 @@ export const createBankCard = async (
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// if (
+//   !select ||
+//   !firstname ||
+//   !lastname ||
+//   !card ||
+//   !expires ||
+//   !year ||
+//   !cvc ||
+//   !userId
+// ) {
+//   res.status(400).json({ error: "Missing required fields" });
+//   return;
+// }

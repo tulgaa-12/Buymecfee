@@ -16,16 +16,8 @@ export const createProfile = async (
       userId,
     } = req.body;
 
-    if (
-      !name ||
-      !about ||
-      !avatarImage ||
-      !socialMediaURL ||
-      !backgroundImage ||
-      !successMessage ||
-      !userId
-    ) {
-      res.status(400).json({ error: "Missing required fields" });
+    if (!userId) {
+      res.status(400).json({ error: "User ID is required" });
       return;
     }
 

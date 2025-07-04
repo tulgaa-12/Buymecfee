@@ -16,10 +16,15 @@ import { Label } from "@radix-ui/react-label";
 import axios from "axios";
 import { Camera } from "lucide-react";
 
+import next from "next";
+
 import Link from "next/link";
+import { format } from "path";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { any, file } from "zod/v4-mini";
 
 import { useAuth } from "@/app/_components/UserProvider";
 type all = {
@@ -98,11 +103,6 @@ export const CompleteProfile = ({ Next }: all) => {
         successMessage: "Profile completed successfully!",
         userId: parseInt(userId!),
       });
-
-      if (!userId) {
-        console.error("User ID not found");
-        return;
-      }
     } catch (err) {
       console.log(err, "errorr");
     }
@@ -122,14 +122,14 @@ export const CompleteProfile = ({ Next }: all) => {
         <Form {...form}>
           <form
             className="space-y-8"
-            onSubmit={form.handleSubmit(HandleSubmit)}>
+            onSubmit={form.handleSubmit(HandleSubmit)}
+          >
             <FormField
               control={form.control}
               name="file"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Add photo</FormLabel>
-
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -155,7 +155,8 @@ export const CompleteProfile = ({ Next }: all) => {
                       ) : (
                         <Label
                           htmlFor="image"
-                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  ">
+                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  "
+                        >
                           <span className="w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center">
                             <Camera className="text-[#E4E4E7]" />
                           </span>
