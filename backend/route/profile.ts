@@ -6,6 +6,6 @@ import { getCompleteProfile } from "../controller/profile/get-completeProfile";
 
 export const ProfileRouter = Router();
 
-ProfileRouter.post("/profile", createProfile);
+ProfileRouter.post("/profile", protect, createProfile);
 ProfileRouter.get("/getCompleteProfile/:userId", getCompleteProfile);
-ProfileRouter.post("/createBankCard", createBankCard);
+ProfileRouter.post("/createBankCard", protect, createBankCard);
