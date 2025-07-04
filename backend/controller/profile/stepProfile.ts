@@ -1,3 +1,40 @@
+// import { Request, Response } from "express";
+// import { prisma } from "../../utlis/prisma";
+
+// export const createBankCard = async (
+//   req: Request,
+//   res: Response
+// ): Promise<void> => {
+//   try {
+//     const { country, firstName, lastName, cardNumber, expiryDate } = req.body;
+
+//     const userId = req.user?.userId;
+
+//     if (!userId) {
+//       res.status(401).json({ error: "Unauthorized: No user ID in token" });
+//       return;
+//     }
+
+//     const newCard = await prisma.bankCard.create({
+//       data: {
+//         country,
+//         firstName,
+//         lastName,
+//         cardNumber,
+//         expiryDate: new Date(expiryDate),
+//         user: {
+//           connect: { id: parseInt(userId) },
+//         },
+//       },
+//     });
+
+//     res.status(201).json(newCard);
+//   } catch (error) {
+//     console.error("Error creating bank card:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
 import { Request, Response } from "express";
 import { prisma } from "../../utlis/prisma";
 
@@ -6,19 +43,21 @@ export const createBankCard = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { select, firstname, lastname, card, expires, year, cvc, userId } =
-      req.body;
+    const { country, firstName, lastName, cardNumber, expiryDate } = req.body;
+    const userId = req.user?.userId;
 
-    const expiryDateString = `${year}-${expires.padStart(2, "0")}-01`;
-    const expiryDate = new Date(expiryDateString);
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized: No user ID in token" });
+      return;
+    }
 
     const newCard = await prisma.bankCard.create({
       data: {
-        country: select,
-        firstName: firstname,
-        lastName: lastname,
-        cardNumber: card,
-        expiryDate,
+        country,
+        firstName,
+        lastName,
+        cardNumber,
+        expiryDate: new Date(expiryDate),
         user: {
           connect: { id: userId },
         },
@@ -27,21 +66,7 @@ export const createBankCard = async (
 
     res.status(201).json(newCard);
   } catch (error) {
-    console.error("Create bank card error:", error);
+    console.error("Error creating bank card:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-// if (
-//   !select ||
-//   !firstname ||
-//   !lastname ||
-//   !card ||
-//   !expires ||
-//   !year ||
-//   !cvc ||
-//   !userId
-// ) {
-//   res.status(400).json({ error: "Missing required fields" });
-//   return;
-// }

@@ -7,7 +7,14 @@ import { UserRouter } from "./route/user";
 import { ProfileRouter } from "./route/profile";
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 dotenv.config();
 
 // app.post("/user", async (_req: Request, res: Response) => {

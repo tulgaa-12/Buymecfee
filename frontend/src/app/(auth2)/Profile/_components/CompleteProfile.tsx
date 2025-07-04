@@ -90,19 +90,41 @@ export const CompleteProfile = ({ Next }: all) => {
 
   const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
     const userId = localStorage.getItem("userId");
+
     const imageUrl = await uploadImage();
     if (!imageUrl) return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token not found");
+      return;
+    }
 
     try {
-      const res = await axios.post("http://localhost:8000/profile", {
-        name: values.name,
-        about: values.about,
-        avatarImage: imageUrl,
-        socialMediaURL: values.url,
-        backgroundImage: "https://example.com/default-bg.jpg",
-        successMessage: "Profile completed successfully!",
-        userId: parseInt(userId!),
-      });
+      const res = await axios.post(
+        "http://localhost:8000/profile",
+        {
+          name: values.name,
+          about: values.about,
+          avatarImage: imageUrl,
+          socialMediaURL: values.url,
+          backgroundImage: "https://example.com/default-bg.jpg",
+          successMessage: "Profile completed successfully!",
+          userId: parseInt(userId!),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.data?.user?.id) {
+        const userId = res.data.user.id;
+        localStorage.setItem("userId", String(userId));
+      } else {
+        console.error("Signup failed:", res.data);
+        alert("Signup failed");
+      }
     } catch (err) {
       console.log(err, "errorr");
     }
@@ -122,8 +144,7 @@ export const CompleteProfile = ({ Next }: all) => {
         <Form {...form}>
           <form
             className="space-y-8"
-            onSubmit={form.handleSubmit(HandleSubmit)}
-          >
+            onSubmit={form.handleSubmit(HandleSubmit)}>
             <FormField
               control={form.control}
               name="file"
@@ -155,8 +176,7 @@ export const CompleteProfile = ({ Next }: all) => {
                       ) : (
                         <Label
                           htmlFor="image"
-                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  "
-                        >
+                          className="flex flex-col items-center justify-center h-[160px] w-[160px] rounded-full border-1 border-dashed  ">
                           <span className="w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center">
                             <Camera className="text-[#E4E4E7]" />
                           </span>

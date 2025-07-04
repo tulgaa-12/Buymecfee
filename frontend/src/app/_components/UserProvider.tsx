@@ -11,7 +11,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 type UserData = {
-  userId: string;
+  userId: number;
 };
 
 type AuthContextType = {
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const tokenChecker = async (token: string) => {
     try {
-      const response = await axios.post("http://localhost:8000/user/verify", {
+      const response = await axios.post("http://localhost:8000/user/verif", {
         token: token,
       });
       setUser({

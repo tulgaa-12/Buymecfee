@@ -56,30 +56,40 @@ export const StepProfile = () => {
   });
 
   const router = useRouter();
+
   const HandleSubmit = async (values: z.infer<typeof formSchema>) => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      console.error("User ID not found");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token not found");
       return;
     }
-    try {
-      const res = await axios.post("http://localhost:8000/createBankCard", {
-        select: values.select,
-        firstname: values.firstname,
-        lastname: values.lastname,
-        card: values.card,
-        expires: values.expires,
-        year: values.year,
-        cvc: values.cvc,
-        userId: parseInt(userId!),
-      });
 
+    try {
+      const month = values.expires.padStart(2, "0");
+      const expiryDate = new Date(`${values.year}-${month}-01`);
+
+      const res = await axios.post(
+        "http://localhost:8000/createBankCard",
+        {
+          country: values.select,
+          firstName: values.firstname,
+          lastName: values.lastname,
+          cardNumber: values.card,
+          expiryDate: expiryDate.toISOString(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // console.log(res.data);
       router.push("/");
     } catch (err) {
-      console.log({ message: "aldaagar" });
+      console.error("Error:", err);
     }
   };
-
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center gap-10">
       <div className="flex flex-col gap-3 pr-[180px]">
@@ -93,8 +103,7 @@ export const StepProfile = () => {
       <Form {...form}>
         <form
           className="space-y-8  "
-          onSubmit={form.handleSubmit(HandleSubmit)}
-        >
+          onSubmit={form.handleSubmit(HandleSubmit)}>
           <FormField
             control={form.control}
             name="select"

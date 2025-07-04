@@ -12,7 +12,7 @@ UserRouter.get("/", Hello);
 UserRouter.post("/login", login);
 
 UserRouter.post("/sign-up", signup);
-UserRouter.post("/verify", verif);
+UserRouter.post("/verif", verif);
 
 UserRouter.post("verify", protect);
 
