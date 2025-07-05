@@ -117,10 +117,10 @@ export const CompleteProfile = ({ Next }: all) => {
           },
         }
       );
-
       if (res.data?.user?.id) {
         const userId = res.data.user.id;
         localStorage.setItem("userId", String(userId));
+        localStorage.setItem("token", res.data.token);
       } else {
         console.error("Signup failed:", res.data);
         alert("Signup failed");

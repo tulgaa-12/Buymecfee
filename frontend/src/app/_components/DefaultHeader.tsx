@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-
+import { usePathname } from "next/navigation";
 import {
   Popover,
   PopoverContent,
@@ -75,6 +75,13 @@ export const DefaultHeader = () => {
     fetch();
   }, []);
 
+  // const arr = ["/", "/editdashboard"];
+  // const path = usePathname();
+
+  // if (arr.includes(path)) {
+  //   return null;
+  // }
+
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
@@ -87,16 +94,18 @@ export const DefaultHeader = () => {
       </div>
       <div className="flex flex-row gap-10 items-center justify-center">
         {pro && (
-          <div className="flex items-center gap-2">
-            {pro.avatarImage && (
-              <img
-                src={pro.avatarImage}
-                alt="Profile"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-            )}
-            <p>{pro.user.username}</p>
-          </div>
+          <Link href={"/editdashboard"}>
+            <div className="flex items-center gap-2">
+              {pro.avatarImage && (
+                <img
+                  src={pro.avatarImage}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              )}
+              <p>{pro.user.username}</p>
+            </div>
+          </Link>
         )}
         <Popover>
           <PopoverTrigger asChild>
@@ -106,8 +115,7 @@ export const DefaultHeader = () => {
           </PopoverTrigger>
           <PopoverContent
             onClick={handleLogout}
-            className="w-[187px] h-[40px] flex items-center"
-          >
+            className="w-[187px] h-[40px] flex items-center">
             <p className=" text-[14px] rounded-md">Logout</p>
           </PopoverContent>
         </Popover>
