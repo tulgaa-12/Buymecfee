@@ -71,26 +71,6 @@ export const ProfilePut = () => {
     }
   };
   return (
-    // <section className="w-[632px]  h-full  flex flex-col gap-10 items-center justify-center">
-    //   <div className="w-[632px]  h-[233px] flex flex-col justify-center gap-spacing/2 shadow-lg rounded-lg  bg-white p-spacing/6 ">
-    //     <div className="w-[584px] h-[48px]  flex flex-row justify-between">
-    //       <div className="flex flex-row gap-3 items-center">
-    //         <img
-    //           src={pro?.avatarImage}
-    //           className="h-[48px] w-[48px] rounded-full object-cover"
-    //         />
-    //         <p className="text-[20px] font-bold">{pro?.user.username}</p>
-    //       </div>
-    //       <EditProfile />
-    //     </div>
-    //     <div className="flex flex-col gap-3">
-    //       <p className="text-[16px] font-semibold">
-    //         About {pro?.user.username}
-    //       </p>
-    //       <p className="text-[14px] font-normal">{pro?.about}</p>
-    //     </div>
-    //   </div>
-    // </section>
     <section className="w-[632px] mx-auto p-4 space-y-5">
       <div className="border border-[#E4E4E7] rounded-lg bg-white p-5">
         <div className="flex items-center justify-between mb-4">

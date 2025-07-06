@@ -18,18 +18,6 @@ app.use(
 );
 dotenv.config();
 
-// app.post("/user", async (_req: Request, res: Response) => {
-//   await prisma.user.create({
-//     data: {
-//       username: "asd",
-//       email: "e7016307@gmail.com",
-//       password: "asd",
-//     },
-//   });
-
-//   res.send({ message: "Success" });
-// });
-
 app.use("/user", UserRouter);
 app.use("/", ProfileRouter);
 app.use("/don", DonationRouter);

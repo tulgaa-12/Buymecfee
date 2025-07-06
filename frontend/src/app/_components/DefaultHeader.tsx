@@ -88,9 +88,11 @@ export const DefaultHeader = () => {
     router.push("/login");
   };
   return (
-    <div className="w-screen h-[56px] flex flex-row items-center justify-between pl-[100px] pr-[100px]">
-      <div className="text-[16]px">
-        <img src="Logo.jpg" className="" />
+    <div className="w-screen h-[56px] flex flex-row items-center justify-between pl-[100px] pr-[100px] pt-3">
+      <div className="">
+        <Link href={"/"}>
+          <img src="Logo.jpg" className="" />
+        </Link>
       </div>
       <div className="flex flex-row gap-10 items-center justify-center">
         {pro && (

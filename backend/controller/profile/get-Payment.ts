@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utlis/prisma";
 
-export const getCompleteProfile = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getUpdate = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = parseInt(req.params.userId);
 
@@ -13,21 +10,21 @@ export const getCompleteProfile = async (
       return;
     }
 
-    const profile = await prisma.profile.findUnique({
+    const payment = await prisma.bankCard.findUnique({
       where: { userId },
       include: {
         user: true,
       },
     });
 
-    if (!profile) {
-      res.status(404).json({ error: "Profile not found" });
+    if (!payment) {
+      res.status(404).json({ error: "Bankcard not found" });
       return;
     }
 
-    res.status(200).json(profile);
+    res.status(200).json(payment);
   } catch (error) {
-    console.error("Error getting profile:", error);
+    console.error("Error", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

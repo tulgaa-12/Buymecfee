@@ -198,8 +198,8 @@ export const EditProfile = () => {
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button onClick={() => handleSave()}>Save changes</Button>
         </DialogFooter>
+        <Button onClick={() => handleSave()}>Save changes</Button>
       </DialogContent>
     </Dialog>
   );

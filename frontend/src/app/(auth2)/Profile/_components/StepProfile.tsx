@@ -38,7 +38,15 @@ export const StepProfile = () => {
     firstname: z.string().min(3).max(20),
     lastname: z.string().min(3).max(20),
     card: z.string().min(10).max(20),
-    expires: z.string().min(2),
+    expires: z.string().refine(
+      (val) => {
+        const num = Number(val);
+        return Number.isInteger(num) && num >= 1 && num <= 12;
+      },
+      {
+        message: "Expires must be a number between 1 and 12",
+      }
+    ),
     year: z.string().min(4),
     cvc: z.string().min(4),
   });
