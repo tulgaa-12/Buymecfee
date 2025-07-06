@@ -1,5 +1,5 @@
 import { DefaultHeader } from "../_components/DefaultHeader";
-import { BuyCoffee } from "./BuyCoffee";
+
 import { CoverImageUploader } from "./ImageAdd";
 import { ProfilePut } from "./ProfilePut";
 
@@ -10,7 +10,6 @@ const ProfileHome = () => {
       <CoverImageUploader />
       <main className=" max-w-5xl h-full flex flex-row justify-center  gap-8  absolute top-[270px] left-[100px] xl:left-[200px] ">
         <ProfilePut />
-        <BuyCoffee />
       </main>
     </div>
   );

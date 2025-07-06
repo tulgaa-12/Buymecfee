@@ -59,7 +59,6 @@ export const ForgetPassword = () => {
       console.log(res.data);
     } catch (err) {
       console.error(err);
-      alert("Something went wrong.");
     }
   };
 
