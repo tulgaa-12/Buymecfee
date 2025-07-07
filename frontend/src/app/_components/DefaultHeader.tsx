@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { usePathname } from "next/navigation";
+
 import {
   Popover,
   PopoverContent,
@@ -12,7 +12,6 @@ import {
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
 import { z } from "zod";
 
 import {
@@ -75,39 +74,30 @@ export const DefaultHeader = () => {
     fetch();
   }, []);
 
-  // const arr = ["/", "/editdashboard"];
-  // const path = usePathname();
-
-  // if (arr.includes(path)) {
-  //   return null;
-  // }
-
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
     router.push("/login");
   };
   return (
-    <div className="w-screen h-[56px] flex flex-row items-center justify-between pl-[100px] pr-[100px] pt-3">
-      <div className="">
+    <div className="w-screen h-[56px] flex flex-row items-center justify-between pl-[100px] pr-[100px]">
+      <div className="text-[16]px">
         <Link href={"/"}>
           <img src="Logo.jpg" className="" />
         </Link>
       </div>
       <div className="flex flex-row gap-10 items-center justify-center">
         {pro && (
-          <Link href={"/editdashboard"}>
-            <div className="flex items-center gap-2">
-              {pro.avatarImage && (
-                <img
-                  src={pro.avatarImage}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              )}
-              <p>{pro.user.username}</p>
-            </div>
-          </Link>
+          <div className="flex items-center gap-2">
+            {pro.avatarImage && (
+              <img
+                src={pro.avatarImage}
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            )}
+            <p>{pro.user.username}</p>
+          </div>
         )}
         <Popover>
           <PopoverTrigger asChild>
@@ -117,7 +107,8 @@ export const DefaultHeader = () => {
           </PopoverTrigger>
           <PopoverContent
             onClick={handleLogout}
-            className="w-[187px] h-[40px] flex items-center">
+            className="w-[187px] h-[40px] flex items-center"
+          >
             <p className=" text-[14px] rounded-md">Logout</p>
           </PopoverContent>
         </Popover>

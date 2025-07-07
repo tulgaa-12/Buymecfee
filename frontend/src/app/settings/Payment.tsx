@@ -100,11 +100,12 @@ export const Payment = () => {
       <p className="font-bold text-[16px]">Payment details</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <Label className="flex flex-col gap-1">
+        <Label className="flex flex-col gap-1 text-[14px] font-medium">
           Select country
           <Select
             onValueChange={(value) => setValue("country", value)}
-            value={country}>
+            value={country}
+          >
             <SelectTrigger className="w-[602px]">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
@@ -121,14 +122,14 @@ export const Payment = () => {
         </Label>
 
         <div className="flex gap-3">
-          <Label className="flex flex-col w-[295px] gap-1">
+          <Label className="flex flex-col w-[295px] gap-1 text-[14px] font-medium">
             Firstname
             <Input
               value={firstName}
               onChange={(e) => setValue("firstName", e.target.value)}
             />
           </Label>
-          <Label className="flex flex-col w-[295px] gap-1">
+          <Label className="flex flex-col w-[295px] gap-1 text-[14px] font-medium">
             Lastname
             <Input
               value={lastName}
@@ -137,7 +138,7 @@ export const Payment = () => {
           </Label>
         </div>
 
-        <Label className="flex flex-col gap-1">
+        <Label className="flex flex-col gap-1 text-[14px] font-medium">
           Card Number
           <Input
             {...register("cardNumber")}
@@ -147,15 +148,15 @@ export const Payment = () => {
         </Label>
 
         <div className="flex gap-5">
-          <Label className="flex flex-col gap-1">
+          <Label className="flex flex-col gap-1 text-[14px] font-medium">
             Expire
             <Input {...register("expires")} placeholder="MM" />
           </Label>
-          <Label className="flex flex-col gap-1">
+          <Label className="flex flex-col gap-1 text-[14px] font-medium">
             Year
             <Input {...register("year")} placeholder="YYYY" />
           </Label>
-          <Label className="flex flex-col gap-1">
+          <Label className="flex flex-col gap-1 text-[14px] font-medium">
             CVC
             <Input {...register("cvc")} placeholder="CVC" />
           </Label>

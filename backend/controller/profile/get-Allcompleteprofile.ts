@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import { prisma } from "../../utlis/prisma";
 
 export const getAllProfiles = async (
-  _req: Request,
+  req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    const { id } = req.body;
     const profiles = await prisma.profile.findMany({
+      where: { id },
       include: {
         user: true,
       },

@@ -10,13 +10,17 @@ export const Buttoncontainer = () => {
           <p className="pr-[170px]"> Home</p>
         </Button>
       </Link>
-      <Button variant="outline" className="border-none">
-        <p className="pr-[160px]">Explore</p>
-      </Button>
-      <Button variant="outline" className="border-none ">
-        <p className="pr-[115px] ">View page</p>
-        <ExternalLink />
-      </Button>
+      <Link href={"Explore"}>
+        <Button variant="outline" className="border-none w-[251px]">
+          <p className="pr-[160px]">Explore</p>
+        </Button>
+      </Link>
+      <Link href={"/editdashboard"}>
+        <Button variant="outline" className="border-none  w-[251px]">
+          <p className="pr-[119px] ">View page</p>
+          <ExternalLink />
+        </Button>
+      </Link>
       <Link href={"/settings"}>
         <Button variant="outline" className="border-none w-[251px] ">
           <p className="pr-[100px]"> Account settings </p>

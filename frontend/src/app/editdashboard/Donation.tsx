@@ -75,7 +75,7 @@ export const Donation = () => {
   };
 
   return (
-    <div className="w-[450px] h-full lg:w-[628px] lg:h-[470px] shadow-lg border border-[#E4E4E7] bg-white rounded-lg p-5 flex flex-col gap-5">
+    <div className="w-[450px] h-full lg:w-[628px] lg:h-[470px] shadow-lg border border-[#E4E4E7] bg-white rounded-lg p-5 flex flex-col gap-5 ">
       <h3 className="text-[24px] font-semibold">Buy Jake a Coffee</h3>
       <div className="w-[337px] h-[40px] flex flex-row gap-3">
         {["1", "2", "5", "10"].map((el) => (
@@ -83,9 +83,10 @@ export const Donation = () => {
             key={el}
             variant="outline"
             className={`w-[72px] bg-[#F4F4F5] ${
-              formData.amount === el ? "" : ""
+              formData.amount === el ? "border  border-[#18181B]" : ""
             }`}
-            onClick={() => handleAmountClick(el)}>
+            onClick={() => handleAmountClick(el)}
+          >
             <Coffee />${el}
           </Button>
         ))}
@@ -118,7 +119,7 @@ export const Donation = () => {
         />
       </div>
 
-      <Button onClick={handleDonate} disabled={loading}>
+      <Button onClick={handleDonate} disabled>
         {loading ? "Sending..." : "Donate"}
       </Button>
     </div>

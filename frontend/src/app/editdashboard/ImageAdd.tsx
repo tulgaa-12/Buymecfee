@@ -61,12 +61,12 @@ export const CoverImageUploader = () => {
   };
 
   return (
-    <div className="w-screen h-[319px] flex flex-col justify-center items-center">
+    <div className="w-screen h-[319px] 2xl:h-[500px] flex flex-col justify-center items-center">
       {uploadedUrl ? (
         <img
           src={uploadedUrl}
           alt="Uploaded Cover"
-          className="w-full h-[319px] object-cover relative "
+          className="w-full h-[319px] 2xl:h-[500px] object-cover relative "
         />
       ) : (
         <Button className="w-[181px] h-[40px]" onClick={handleUploadClick}>
@@ -81,13 +81,15 @@ export const CoverImageUploader = () => {
             <Button
               onClick={handleUploadClick}
               disabled={loading}
-              className=" text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition absolute right-35 top-[72px]">
+              className=" text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition absolute right-35 top-[72px]"
+            >
               {loading ? "Uploading..." : "Save changes"}
             </Button>
             <Button
               onClick={handleChangeImage}
               disabled={loading}
-              className=" bg-[#F4F4F5] text-black w-[79px] px-4 py-2 rounded-md hover:bg-[#F4F4F5] disabled:opacity-50 disabled:cursor-not-allowed transition absolute top-[72px] right-10">
+              className=" bg-[#F4F4F5] text-black w-[79px] px-4 py-2 rounded-md hover:bg-[#F4F4F5] disabled:opacity-50 disabled:cursor-not-allowed transition absolute top-[72px] right-10"
+            >
               Cancel
             </Button>
           </div>
@@ -109,7 +111,8 @@ export const CoverImageUploader = () => {
           />
           <Label
             htmlFor="upload"
-            className=" w-[149px] h-[40px] bg-[#F4F4F5] text-[14px] text-black rounded-md flex flex-row gap-1 justify-center absolute right-10 top-[72px]">
+            className=" w-[149px] h-[40px] bg-[#F4F4F5] text-[14px] text-black rounded-md flex flex-row gap-1 justify-center absolute right-10 top-[72px]"
+          >
             <Camera />
             Change cover
           </Label>
