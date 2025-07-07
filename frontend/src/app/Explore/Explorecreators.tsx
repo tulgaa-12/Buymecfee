@@ -39,7 +39,7 @@ export const Explorecreators = () => {
       try {
         const res = await axios.get(`http://localhost:8000/getAllProfiles`);
         console.log("res.data", res.data);
-        setPro(res.data);
+
         setUsers(res.data);
       } catch (err) {
         console.log(err, "err");
@@ -47,10 +47,6 @@ export const Explorecreators = () => {
     };
     fetch();
   }, []);
-
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
 
   const filteredCreators = users.filter((el) => {
     const name = el.name || "";
@@ -87,8 +83,7 @@ export const Explorecreators = () => {
           {filteredCreators.map((el) => (
             <div
               key={el.id}
-              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10"
-            >
+              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10">
               <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-3">
                   <img
@@ -114,11 +109,10 @@ export const Explorecreators = () => {
                 </p>
               </div>
 
-              <Link href={`/editdashboard/${el.id}`}>
+              <Link href={`/editdashboard/${el.userId}`}>
                 <Button
                   variant="outline"
-                  className="bg-[#F4F4F5] absolute right-65"
-                >
+                  className="bg-[#F4F4F5] absolute right-40 2xl:right-65">
                   View profile <ExternalLink />
                 </Button>
               </Link>

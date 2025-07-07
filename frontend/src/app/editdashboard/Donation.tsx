@@ -6,6 +6,7 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 type DonationState = {
   amount: string;
@@ -15,6 +16,9 @@ type DonationState = {
 };
 
 export const Donation = () => {
+  const searchParams = useSearchParams();
+  const recipientIdFromURL = searchParams.get("id");
+
   const [formData, setFormData] = useState<DonationState>({
     amount: "",
     specialMessage: "",
@@ -46,7 +50,7 @@ export const Donation = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://localhost:8000/api/donations",
+        "http://localhost:8000/don/donations",
         {
           amount: Number(formData.amount),
           specialMessage: formData.specialMessage,
@@ -75,7 +79,7 @@ export const Donation = () => {
   };
 
   return (
-    <div className="w-[450px] h-full lg:w-[628px] lg:h-[470px] shadow-lg border border-[#E4E4E7] bg-white rounded-lg p-5 flex flex-col gap-5 ">
+    <div className="w-[450px] h-full lg:w-[628px] lg:h-[470px] shadow-lg border border-[#E4E4E7] bg-white rounded-lg p-5 flex flex-col gap-5 absolute left-170 top-4">
       <h3 className="text-[24px] font-semibold">Buy Jake a Coffee</h3>
       <div className="w-[337px] h-[40px] flex flex-row gap-3">
         {["1", "2", "5", "10"].map((el) => (
@@ -85,8 +89,7 @@ export const Donation = () => {
             className={`w-[72px] bg-[#F4F4F5] ${
               formData.amount === el ? "border  border-[#18181B]" : ""
             }`}
-            onClick={() => handleAmountClick(el)}
-          >
+            onClick={() => handleAmountClick(el)}>
             <Coffee />${el}
           </Button>
         ))}

@@ -6,11 +6,15 @@ export const getAllProfiles = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.body;
     const profiles = await prisma.profile.findMany({
-      where: { id },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+          },
+        },
       },
     });
 

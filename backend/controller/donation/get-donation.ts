@@ -1,8 +1,16 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utlis/prisma";
 
-export const getSentDonations = async (req: Request, res: Response) => {
-  const userId = req.user?.userId;
+export const getSentDonations = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const userId = parseInt(req.params.userId);
+
+  if (!userId) {
+    res.status(400).json({ error: "UserId parameter missing or invalid" });
+    return;
+  }
 
   try {
     const donations = await prisma.donation.findMany({
@@ -24,7 +32,6 @@ export const getSentDonations = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
-
 export const getReceivedDonations = async (req: Request, res: Response) => {
   const userId = parseInt(req.params.userId);
 

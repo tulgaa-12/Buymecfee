@@ -8,8 +8,14 @@ export const createDonation = async (
   const { amount, specialMessage, socialURLOrBuyMeACoffee, recipientId } =
     req.body;
   const userId = req.user?.userId;
+
   if (!userId) {
     res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  if (userId === recipientId) {
+    res.status(400).json({ error: "You cannot donate to yourself." });
     return;
   }
 

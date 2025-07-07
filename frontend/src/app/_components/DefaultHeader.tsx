@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-
+import Image from "next/image";
 import {
   Popover,
   PopoverContent,
@@ -10,26 +10,6 @@ import {
 } from "@/components/ui/popover";
 
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
@@ -83,7 +63,13 @@ export const DefaultHeader = () => {
     <div className="w-screen h-[56px] flex flex-row items-center justify-between pl-[100px] pr-[100px]">
       <div className="text-[16]px">
         <Link href={"/"}>
-          <img src="Logo.jpg" className="" />
+          <Image
+            src="/Logo.jpg"
+            alt="Logo"
+            width={119}
+            height={24}
+            className="object-cover"
+          />
         </Link>
       </div>
       <div className="flex flex-row gap-10 items-center justify-center">
@@ -107,8 +93,7 @@ export const DefaultHeader = () => {
           </PopoverTrigger>
           <PopoverContent
             onClick={handleLogout}
-            className="w-[187px] h-[40px] flex items-center"
-          >
+            className="w-[187px] h-[40px] flex items-center">
             <p className=" text-[14px] rounded-md">Logout</p>
           </PopoverContent>
         </Popover>

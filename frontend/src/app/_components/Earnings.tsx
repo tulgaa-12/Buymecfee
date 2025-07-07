@@ -4,39 +4,34 @@ import axios from "axios";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 
-type Profile = {
+type Donation = {
   id: number;
   amount: number;
-  speicelMessage: string;
-  socialURLOrBuyMeACoffee: String;
-  donor: string;
-  recipient: string;
+  specialMessage: string;
   createdAt: string;
-  updatedAt: string;
-  user: {
-    id: number;
-    email: string;
+  donor: {
     username: string;
+    email: string;
   };
 };
 export const Earnings = () => {
-  const [pro, setPro] = useState<Profile[]>([]);
+  const [pro, setPro] = useState<Donation[]>([]);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      const userId = localStorage.getItem("Token");
+    const fetch = async () => {
+      const userId = localStorage.getItem("userId");
       if (!userId) return;
+
       try {
         const res = await axios.get(
-          `http://localhost:8000/don/donation/received/${userId}`
+          `http://localhost:8000/don/donation/rec/${userId}`
         );
-        console.log("res.data", res.data);
         setPro(res.data);
-      } catch (err) {
-        console.error("Error", err);
+      } catch (error) {
+        console.error("Error fetching donations", error);
       }
     };
-    fetchProfiles();
+    fetch();
   }, []);
   return (
     <div className="w-[907px] h-full shadow-lg rounded-lg border border-[#E4E4E7]">
@@ -56,7 +51,9 @@ export const Earnings = () => {
         ) : (
           <div>
             {pro.map((el) => (
-              <div key={el.id}>{el.amount}</div>
+              <div key={el.id}>
+                <div></div>
+              </div>
             ))}
           </div>
         )}

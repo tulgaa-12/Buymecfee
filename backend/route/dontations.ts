@@ -9,5 +9,5 @@ import { protect } from "../middleware/verify";
 export const DonationRouter = Router();
 
 DonationRouter.post("/donation", protect, createDonation);
-DonationRouter.get("/donation/sent/:userId", protect, getSentDonations);
-DonationRouter.get("/donation/received/:userId", protect, getReceivedDonations);
+DonationRouter.get("/donation/donor/:userId", protect, getSentDonations);
+DonationRouter.get("/donation/rec/:userId", getReceivedDonations);

@@ -24,9 +24,10 @@ type Profile = {
   };
 };
 
-export const ProfilePut = () => {
-  // const params = useParams();
-  // const id = params.id as string;
+type ProfilePutProps = {
+  userId: string | undefined;
+};
+export const ProfilePut = ({ userId }: ProfilePutProps) => {
   const [pro, setPro] = useState<Profile | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,23 +36,24 @@ export const ProfilePut = () => {
     socialMediaURL: "",
     avatarImage: "",
   });
-
-  // console.log("dqwofwhqoifw", id);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
+    const storedId = localStorage.getItem("userId");
+    setCurrentUserId(storedId);
+
     const fetch = async () => {
-      const userId = localStorage.getItem("userId");
       if (!userId) return;
       try {
-        const res = await axios.get(`http://localhost:8000/getAllProfiles`);
-        console.log("res.data", res.data);
+        const res = await axios.get(`http://localhost:8000/profiles/${userId}`);
         setPro(res.data);
       } catch (err) {
-        console.log(err, "err");
+        console.log(err);
       }
     };
+
     fetch();
-  }, []);
+  }, [userId]);
 
   return (
     <section className="w-[632px] mx-auto p-4 space-y-5">
@@ -65,7 +67,7 @@ export const ProfilePut = () => {
             />
             <h2 className="text-xl font-bold">{pro?.user.username}</h2>
           </div>
-          <EditProfile />
+          {currentUserId === String(pro?.userId) && <EditProfile />}
         </div>
         <div className="h-[33px]">
           <div className="bg-[#F4F4F5] border-[1px]"></div>
@@ -84,8 +86,7 @@ export const ProfilePut = () => {
           href={pro?.socialMediaURL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-blue-600 underline break-words"
-        >
+          className="text-sm text-blue-600 underline break-words">
           {pro?.socialMediaURL || "Not provided"}
         </a>
       </div>
