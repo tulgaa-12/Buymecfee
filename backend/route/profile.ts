@@ -8,6 +8,7 @@ import { updateProfile } from "../controller/profile/profileupdate";
 import { Paymentupdate } from "../controller/profile/paymentupdate";
 import { getUpdate } from "../controller/profile/get-Payment";
 import { getProfileById } from "../controller/profile/getProfileById";
+import { updateCoverImage } from "../controller/profile/backgrounded";
 export const ProfileRouter = Router();
 
 ProfileRouter.post("/profile", createProfile);
@@ -17,5 +18,5 @@ ProfileRouter.get("/getAllProfiles", getAllProfiles);
 ProfileRouter.put("/updateProfile/:userId", updateProfile);
 ProfileRouter.put("/paymentupdate/:userId", Paymentupdate);
 ProfileRouter.get("/getbankcard/:userId", getUpdate);
-
+ProfileRouter.post("/updatecover", updateCoverImage);
 ProfileRouter.get("/profiles/:id", getProfileById);

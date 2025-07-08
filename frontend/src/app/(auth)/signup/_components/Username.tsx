@@ -20,6 +20,8 @@ import { z } from "zod";
 import { email } from "zod/v4-mini";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 type Next = {
   nextStep: () => void;
@@ -27,6 +29,7 @@ type Next = {
 };
 
 export const Username = ({ nextStep, usersname }: Next) => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const formSchema = z.object({
     email: z
@@ -88,8 +91,7 @@ export const Username = ({ nextStep, usersname }: Next) => {
         <Form {...form}>
           <form
             className="space-y-8  "
-            onSubmit={form.handleSubmit(HandleSubmit)}
-          >
+            onSubmit={form.handleSubmit(HandleSubmit)}>
             <FormField
               control={form.control}
               name="email"
@@ -111,15 +113,22 @@ export const Username = ({ nextStep, usersname }: Next) => {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      type={showPassword ? "text" : "password"}
                       placeholder="Enter password here"
                       className="w-[359px] h-[40px]"
                       {...field}
                     />
                   </FormControl>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-8 text-gray-500">
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                   <FormMessage />
                 </FormItem>
               )}

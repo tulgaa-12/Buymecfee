@@ -6,18 +6,19 @@ import { Camera } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const CoverImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const savedUrl = localStorage.getItem("coverImageUrl");
-    if (savedUrl) {
-      setUploadedUrl(savedUrl);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedUrl = localStorage.getItem("coverImageUrl");
+  //   if (savedUrl) {
+  //     setUploadedUrl(savedUrl);
+  //   }
+  // }, []);
 
   const uploadImage = async (file: File): Promise<string | null> => {
     const formData = new FormData();
@@ -40,17 +41,46 @@ export const CoverImageUploader = () => {
     }
   };
 
+  // const handleUploadClick = async () => {
+  //   if (!selectedImage) {
+  //     alert("Please select a file");
+  //     return;
+  //   }
+  //   setLoading(true);
+  //   const url = await uploadImage(selectedImage);
+  //   setLoading(false);
+  //   if (url) {
+  //     setUploadedUrl(url);
+  //     localStorage.setItem("coverImageUrl", url);
+  //   } else {
+  //     alert("Upload failed");
+  //   }
+  // };
   const handleUploadClick = async () => {
     if (!selectedImage) {
       alert("Please select a file");
       return;
     }
+
     setLoading(true);
     const url = await uploadImage(selectedImage);
     setLoading(false);
+
     if (url) {
       setUploadedUrl(url);
-      localStorage.setItem("coverImageUrl", url);
+
+      const userId = localStorage.getItem("userId");
+
+      try {
+        await axios.post("http://localhost:8000/updatecover", {
+          userId,
+          coverImageUrl: url,
+        });
+        alert("Cover image saved to profile successfully!");
+      } catch (err) {
+        console.error("Failed to save to backend:", err);
+        alert("Upload succeeded, but saving to profile failed");
+      }
     } else {
       alert("Upload failed");
     }
@@ -59,6 +89,25 @@ export const CoverImageUploader = () => {
   const handleChangeImage = () => {
     setSelectedImage(null);
   };
+
+  useEffect(() => {
+    const fetchCover = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/getCompleteProfile/${userId}`
+        );
+        const url = res.data.backgroundImage;
+        if (url) setUploadedUrl(url);
+      } catch (err) {
+        console.error("Failed to load profile image", err);
+      }
+    };
+
+    fetchCover();
+  }, []);
 
   return (
     <div className="w-screen h-[319px] 2xl:h-[500px] flex flex-col justify-center items-center">
@@ -81,15 +130,13 @@ export const CoverImageUploader = () => {
             <Button
               onClick={handleUploadClick}
               disabled={loading}
-              className=" text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition absolute right-35 top-[72px]"
-            >
+              className=" text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition absolute right-35 top-[72px]">
               {loading ? "Uploading..." : "Save changes"}
             </Button>
             <Button
               onClick={handleChangeImage}
               disabled={loading}
-              className=" bg-[#F4F4F5] text-black w-[79px] px-4 py-2 rounded-md hover:bg-[#F4F4F5] disabled:opacity-50 disabled:cursor-not-allowed transition absolute top-[72px] right-10"
-            >
+              className=" bg-[#F4F4F5] text-black w-[79px] px-4 py-2 rounded-md hover:bg-[#F4F4F5] disabled:opacity-50 disabled:cursor-not-allowed transition absolute top-[72px] right-10">
               Cancel
             </Button>
           </div>
@@ -100,7 +147,7 @@ export const CoverImageUploader = () => {
             type="file"
             accept="image/*"
             id="upload"
-            className="w-[149px] h-[40px] 
+            className="w-[149px] h-[40px]
              hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
@@ -111,8 +158,7 @@ export const CoverImageUploader = () => {
           />
           <Label
             htmlFor="upload"
-            className=" w-[149px] h-[40px] bg-[#F4F4F5] text-[14px] text-black rounded-md flex flex-row gap-1 justify-center absolute right-10 top-[72px]"
-          >
+            className=" w-[149px] h-[40px] bg-[#F4F4F5] text-[14px] text-black rounded-md flex flex-row gap-1 justify-center absolute right-10 top-[72px]">
             <Camera />
             Change cover
           </Label>

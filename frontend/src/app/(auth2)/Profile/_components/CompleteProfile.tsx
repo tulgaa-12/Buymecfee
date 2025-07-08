@@ -16,15 +16,10 @@ import { Label } from "@radix-ui/react-label";
 import axios from "axios";
 import { Camera } from "lucide-react";
 
-import next from "next";
-
-import Link from "next/link";
 import { format } from "path";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { any, file } from "zod/v4-mini";
 
 import { useAuth } from "@/app/_components/UserProvider";
 type all = {

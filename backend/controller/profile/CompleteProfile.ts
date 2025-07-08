@@ -21,6 +21,15 @@ export const createProfile = async (
       return;
     }
 
+    const userExists = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!userExists) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
     const profile = await prisma.profile.create({
       data: {
         name,
