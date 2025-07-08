@@ -51,6 +51,7 @@ export const Default = () => {
     };
     fetch();
   }, []);
+
   return (
     <div className="w-[955px] h-full flex flex-col justify-center items-center gap-10">
       <div className="w-[907px] h-[257px] shadow-lg rounded-lg border border-[#E4E4E7] flex flex-col justify-center items-center gap-1">
