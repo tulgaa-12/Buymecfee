@@ -8,6 +8,7 @@ export const createDonation = async (
   const { amount, specialMessage, socialURLOrBuyMeACoffee, recipientId } =
     req.body;
   const userId = req.user?.userId;
+  console.log(req.body, "assddddwdd");
 
   if (!userId) {
     res.status(401).json({ error: "Unauthorized" });

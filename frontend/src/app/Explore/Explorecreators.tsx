@@ -80,10 +80,11 @@ export const Explorecreators = () => {
         </div>
       ) : (
         <div className="flex flex-col gap-10">
-          {filteredCreators.map((el) => (
+          {filteredCreators.slice(0, 10).map((el) => (
             <div
               key={el.id}
-              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10">
+              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10"
+            >
               <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-3">
                   <img
@@ -112,7 +113,8 @@ export const Explorecreators = () => {
               <Link href={`/editdashboard/${el.userId}`}>
                 <Button
                   variant="outline"
-                  className="bg-[#F4F4F5] absolute right-40 2xl:right-65">
+                  className="bg-[#F4F4F5] absolute right-40 2xl:right-65"
+                >
                   View profile <ExternalLink />
                 </Button>
               </Link>

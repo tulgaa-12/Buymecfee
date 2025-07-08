@@ -18,7 +18,7 @@ const ProfileHome = () => {
       <CoverImageUploader />
       <main className="h-full flex flex-row  gap-8  absolute top-[300px] 2xl:top-[500px] left-[50px] xl:left-[100px] 2xl:left-110 ">
         <ProfilePut userId={userId} />
-        <Donation />
+        <Donation userId={userId} />
       </main>
     </div>
   );

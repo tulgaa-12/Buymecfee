@@ -6,24 +6,25 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 
 type DonationState = {
   amount: string;
   specialMessage: string;
   socialURLOrBuyMeACoffee: string;
-  recipientId: string;
+  recipientId: Number;
 };
 
-export const Donation = () => {
-  const searchParams = useSearchParams();
-  const recipientIdFromURL = searchParams.get("id");
+type ProfilePutProps = {
+  userId: string | undefined;
+};
 
+export const Donation = ({ userId }: ProfilePutProps) => {
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [formData, setFormData] = useState<DonationState>({
     amount: "",
     specialMessage: "",
     socialURLOrBuyMeACoffee: "",
-    recipientId: "",
+    recipientId: Number(userId),
   });
 
   const [loading, setLoading] = useState(false);
@@ -48,9 +49,15 @@ export const Donation = () => {
 
     try {
       const token = localStorage.getItem("token");
+      const storedId = localStorage.getItem("userId");
+
+      if (!storedId) {
+        alert("no user");
+        return;
+      }
 
       const response = await axios.post(
-        "http://localhost:8000/don/donations",
+        `http://localhost:8000/don/donation/${storedId}`,
         {
           amount: Number(formData.amount),
           specialMessage: formData.specialMessage,
@@ -69,12 +76,10 @@ export const Donation = () => {
         amount: "",
         specialMessage: "",
         socialURLOrBuyMeACoffee: "",
-        recipientId: "",
+        recipientId: 10,
       });
     } catch (err: any) {
       setError(err.response?.data?.error || "Something went wrong");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -89,7 +94,8 @@ export const Donation = () => {
             className={`w-[72px] bg-[#F4F4F5] ${
               formData.amount === el ? "border  border-[#18181B]" : ""
             }`}
-            onClick={() => handleAmountClick(el)}>
+            onClick={() => handleAmountClick(el)}
+          >
             <Coffee />${el}
           </Button>
         ))}
@@ -122,8 +128,8 @@ export const Donation = () => {
         />
       </div>
 
-      <Button onClick={handleDonate} disabled>
-        {loading ? "Sending..." : "Donate"}
+      <Button onClick={handleDonate}>
+        {loading ? "Uploading..." : "Save changes"}
       </Button>
     </div>
   );

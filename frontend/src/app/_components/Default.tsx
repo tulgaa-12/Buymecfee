@@ -83,7 +83,7 @@ export const Default = () => {
         <div className="w-[859px] flex flex-row gap-10">
           <div className="flex flex-col gap-10">
             <h4 className="text-[20px] font-bold">Earnings</h4>
-            <h1 className="text-[36px] font-bold">$450</h1>
+            <h1 className="text-[36px] font-bold">${8 + 8}</h1>
           </div>
           <Select>
             <SelectTrigger className="w-[175px]">
@@ -107,22 +107,23 @@ export const Default = () => {
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
             <SelectContent>
-              <SelectGroup>
+              <SelectItem value="apple">
                 <Checkbox />
-                <SelectItem value="apple">$1</SelectItem>
-                <SelectItem value="banana">
-                  <Checkbox />
-                  $2
-                </SelectItem>
-                <SelectItem value="blueberry">
-                  <Checkbox />
-                  $5
-                </SelectItem>
-                <SelectItem value="grapes">
-                  <Checkbox />
-                  $10
-                </SelectItem>
-              </SelectGroup>
+                $1
+              </SelectItem>
+
+              <SelectItem value="banana">
+                <Checkbox />
+                $2
+              </SelectItem>
+              <SelectItem value="blueberry">
+                <Checkbox />
+                $5
+              </SelectItem>
+              <SelectItem value="grapes">
+                <Checkbox />
+                $10
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
