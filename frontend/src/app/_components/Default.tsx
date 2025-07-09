@@ -1,19 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Copy } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import axios from "axios";
 import { Earnings } from "./Earnings";
 type Profile = {
@@ -100,7 +89,9 @@ export const Default = () => {
     fetch();
   }, []);
 
-  const totalAmount = don.reduce((sum, don) => sum + don.amount, 0);
+  const totalAmount = Array.isArray(don)
+    ? don.reduce((sum, don) => sum + don.amount, 0)
+    : 0;
 
   const handleCopy = () => {
     const pageUrl = `${window.location.origin}/${pro?.user.username}`;
@@ -141,7 +132,7 @@ export const Default = () => {
         <div className="w-[859px] flex flex-row gap-10">
           <div className="flex flex-col gap-10">
             <h4 className="text-[20px] font-bold">Earnings</h4>
-            <h1 className="text-[36px] font-bold">${totalAmount}</h1>
+            <h1 className="text-[36px] font-bold">$ {totalAmount}</h1>
           </div>
         </div>
       </div>

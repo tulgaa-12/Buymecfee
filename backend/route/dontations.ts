@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createDonation } from "../controller/donation/donaton";
 import {
+  getDonationQr,
   getReceivedDonations,
   getSentDonations,
 } from "../controller/donation/get-donation";
@@ -11,3 +12,4 @@ export const DonationRouter = Router();
 DonationRouter.post("/donation/:userId", protect, createDonation);
 DonationRouter.get("/donation/donor/:userId", protect, getSentDonations);
 DonationRouter.get("/donation/rec/:userId", getReceivedDonations);
+DonationRouter.get("/qrdonation:userId", getDonationQr);

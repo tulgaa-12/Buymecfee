@@ -1,11 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Coffee } from "lucide-react";
+import { Coffee, QrCode } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 type DonationState = {
   amount: string;
@@ -27,14 +38,17 @@ export const Donation = ({ userId }: ProfilePutProps) => {
     recipientId: Number(userId),
   });
 
+  const [startRedirect, setStartRedirect] = useState(false);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
+  const [qr, setQr] = useState("");
   const handleAmountClick = (value: string) => {
     setFormData((prev) => ({ ...prev, amount: value }));
   };
 
+  const router = useRouter();
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -71,6 +85,9 @@ export const Donation = ({ userId }: ProfilePutProps) => {
         }
       );
 
+      const { data } = await axios.get(`http://localhost:8000/qradonation`);
+      setQr(data.qr);
+
       setSuccess("Donation sent successfully!");
       setFormData({
         amount: "",
@@ -78,10 +95,22 @@ export const Donation = ({ userId }: ProfilePutProps) => {
         socialURLOrBuyMeACoffee: "",
         recipientId: 10,
       });
+
+      setTimeout(() => {
+        router.push("/DonationComplete");
+      }, 9000);
     } catch (err: any) {
       setError(err.response?.data?.error || "Something went wrong");
+    } finally {
+      setLoading(false);
+      setOpen(true);
     }
   };
+
+  // const handleQr = async () => {
+  //   const { data } = await axios.get(``);
+  //   setQr(data.qr);
+  // };
 
   return (
     <div className="w-[450px] h-full lg:w-[628px] lg:h-[470px] shadow-lg border border-[#E4E4E7] bg-white rounded-lg p-5 flex flex-col gap-5 absolute left-170 top-4">
@@ -128,9 +157,29 @@ export const Donation = ({ userId }: ProfilePutProps) => {
         />
       </div>
 
-      <Button onClick={handleDonate}>
-        {loading ? "Uploading..." : "Save changes"}
-      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <form>
+          <DialogTrigger asChild>
+            <Button onClick={handleDonate} className="w-[580px]">
+              {loading ? "Uploading..." : "Save changes"}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle className="pl-23 text-[30px]">
+                Scan QR code
+              </DialogTitle>
+              <DialogDescription className="pl-10 ">
+                Scan the QR code to complete your donation
+              </DialogDescription>
+            </DialogHeader>
+            <div className="pl-28">{qr && <img src={qr} />}</div>
+            <DialogFooter>
+              <DialogClose asChild></DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </form>
+      </Dialog>
     </div>
   );
 };

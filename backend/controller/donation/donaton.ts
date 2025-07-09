@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utlis/prisma";
-
+import QRCode from "qrcode";
 export const createDonation = async (
   req: Request,
   res: Response
@@ -9,6 +9,8 @@ export const createDonation = async (
     req.body;
   const userId = req.user?.userId;
   console.log(req.body, "assddddwdd");
+  // const url = `http://localhost:3000/DonationComplete/${userId}`;
+  // const qr = await QRCode.toDataURL(url);
 
   if (!userId) {
     res.status(401).json({ error: "Unauthorized" });

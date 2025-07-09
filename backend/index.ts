@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 // import { prisma } from "./utlis/prisma";
 import { prisma } from "./utlis/prisma";
 import cors from "cors";
+import QRCode from "qrcode";
 import { UserRouter } from "./route/user";
 import { ProfileRouter } from "./route/profile";
 import { DonationRouter } from "./route/dontations";
@@ -17,6 +18,18 @@ app.use(
   })
 );
 dotenv.config();
+
+app.get("/qradonation", async (req, res) => {
+  const url = "https://www.instagram.com/chelseafc/";
+
+  try {
+    const qr = await QRCode.toDataURL(url);
+
+    res.json({ qr });
+  } catch (err) {
+    res.status(500).send("Failed to generate QR code");
+  }
+});
 
 app.use("/user", UserRouter);
 app.use("/", ProfileRouter);

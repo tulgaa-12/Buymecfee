@@ -67,7 +67,8 @@ const LoginHome = () => {
         <Form {...form}>
           <form
             className="space-y-8"
-            onSubmit={form.handleSubmit(HandleSubmit)}>
+            onSubmit={form.handleSubmit(HandleSubmit)}
+          >
             <FormField
               control={form.control}
               name="email"
@@ -104,7 +105,8 @@ const LoginHome = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
-                      className="absolute right-3 top-2.5 text-gray-500">
+                      className="absolute right-3 top-2.5 text-gray-500"
+                    >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>

@@ -8,30 +8,30 @@ datasource db {
 }
 
 model User {
-  id                 Int        @id @default(autoincrement())
-  email              String     @unique
-  password           String
-  username           String     @unique
-  receivedDonations  Donation[] @relation("ReceivedDonations")
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
-  profile            Profile?
-  bankCard           BankCard?
-  donatedDonations   Donation[] @relation("DonatedDonations")
+  id                Int        @id @default(autoincrement())
+  email             String     @unique
+  password          String
+  username          String     @unique
+  receivedDonations Donation[] @relation("ReceivedDonations")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  profile           Profile?
+  bankCard          BankCard?
+  donatedDonations  Donation[] @relation("DonatedDonations")
 }
 
 model Profile {
-  id               Int      @id @default(autoincrement())
-  name             String
-  about            String
-  avatarImage      String
-  socialMediaURL   String
-  backgroundImage  String
-  successMessage   String
-  user             User     @relation(fields: [userId], references: [id])
-  userId           Int      @unique
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  name            String
+  about           String
+  avatarImage     String
+  socialMediaURL  String
+  backgroundImage String
+  successMessage  String
+  user            User     @relation(fields: [userId], references: [id])
+  userId          Int      @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model BankCard {
@@ -56,6 +56,7 @@ model Donation {
   donorId                 Int
   recipient               User     @relation("ReceivedDonations", fields: [recipientId], references: [id])
   recipientId             Int
+  isPaid                  Boolean  @default(false)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 }
