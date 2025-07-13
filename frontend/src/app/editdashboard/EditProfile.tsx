@@ -195,9 +195,7 @@ export const EditProfile = () => {
         </div>
 
         <DialogFooter className="mt-4">
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
+          <DialogClose asChild></DialogClose>
         </DialogFooter>
         <Button onClick={() => handleSave()}>Save changes</Button>
       </DialogContent>

@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const formSchema = z
   .object({
@@ -29,6 +29,7 @@ const formSchema = z
 
 export const ForgetPassword = () => {
   const [userId, setUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -51,14 +52,19 @@ export const ForgetPassword = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const res = await axios.put("http://localhost:8000/user/forget", {
         userId,
         password: data.password,
       });
+
       console.log(res.data);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,7 +103,9 @@ export const ForgetPassword = () => {
           )}
         />
 
-        <Button type="submit">Save changes</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Uploading..." : "Save changes"}
+        </Button>
       </form>
     </Form>
   );

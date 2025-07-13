@@ -39,7 +39,7 @@ type Profile = {
 export const ProfileSettings = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [pro, setPro] = useState<Profile | null>(null);
-
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -90,6 +90,8 @@ export const ProfileSettings = () => {
     const userId = localStorage.getItem("userId");
     if (!userId) return;
 
+    setLoading(true);
+
     let imageUrl = pro?.avatarImage || "";
     if (selectedImage) {
       const uploaded = await uploadImage();
@@ -107,6 +109,8 @@ export const ProfileSettings = () => {
       setPro(res.data);
     } catch (err) {
       console.error("Profile update error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -182,7 +186,9 @@ export const ProfileSettings = () => {
           )}
         </div>
 
-        <Button type="submit">Save changes</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Saving..." : "Save changes"}
+        </Button>
       </form>
     </div>
   );

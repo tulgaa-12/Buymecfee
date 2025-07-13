@@ -26,6 +26,7 @@ type PaymentForm = {
 
 export const Payment = () => {
   const [pro, setPro] = useState<PaymentForm | null>(null);
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setValue, watch } = useForm<PaymentForm>({
     defaultValues: {
       country: "",
@@ -73,6 +74,7 @@ export const Payment = () => {
   const onSubmit = async (data: PaymentForm) => {
     const userId = localStorage.getItem("userId");
     if (!userId) return;
+    setLoading(true);
 
     const expiryDate = `${data.year}-${data.expires}-01`;
 
@@ -92,6 +94,8 @@ export const Payment = () => {
       setPro(res.data);
     } catch (err) {
       console.error("Update error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,8 +108,7 @@ export const Payment = () => {
           Select country
           <Select
             onValueChange={(value) => setValue("country", value)}
-            value={country}
-          >
+            value={country}>
             <SelectTrigger className="w-[602px]">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
@@ -162,7 +165,9 @@ export const Payment = () => {
           </Label>
         </div>
 
-        <Button type="submit">Save changes</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Saving..." : "Save changes"}
+        </Button>
       </form>
     </div>
   );

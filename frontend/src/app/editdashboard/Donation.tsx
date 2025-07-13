@@ -123,8 +123,7 @@ export const Donation = ({ userId }: ProfilePutProps) => {
             className={`w-[72px] bg-[#F4F4F5] ${
               formData.amount === el ? "border  border-[#18181B]" : ""
             }`}
-            onClick={() => handleAmountClick(el)}
-          >
+            onClick={() => handleAmountClick(el)}>
             <Coffee />${el}
           </Button>
         ))}
@@ -160,7 +159,15 @@ export const Donation = ({ userId }: ProfilePutProps) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <form>
           <DialogTrigger asChild>
-            <Button onClick={handleDonate} className="w-[580px]">
+            <Button
+              onClick={handleDonate}
+              className="w-[580px]"
+              disabled={
+                loading ||
+                !formData.amount ||
+                !formData.socialURLOrBuyMeACoffee ||
+                !formData.specialMessage
+              }>
               {loading ? "Uploading..." : "Save changes"}
             </Button>
           </DialogTrigger>
