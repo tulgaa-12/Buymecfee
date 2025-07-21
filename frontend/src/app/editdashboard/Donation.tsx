@@ -88,14 +88,13 @@ export const Donation = ({ userId }: ProfilePutProps) => {
       const { data } = await axios.get(`http://localhost:8000/qradonation`);
       setQr(data.qr);
 
-      setSuccess("Donation sent successfully!");
+      // setSuccess("Donation sent successfully!");
       setFormData({
         amount: "",
         specialMessage: "",
         socialURLOrBuyMeACoffee: "",
         recipientId: 10,
       });
-
       setTimeout(() => {
         router.push("/DonationComplete");
       }, 9000);
