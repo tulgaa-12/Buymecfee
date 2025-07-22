@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "echo 'Skip build step'",
     "start": "nodemon",
     "prisma:generate": "yarn prisma generate",
     "prisma:migrate": "yarn prisma migrate dev --name init"
