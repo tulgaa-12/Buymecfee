@@ -1,6 +1,6 @@
 {
-    "watch":[""],
-    "exp":"ts",
-    "ignore":["**/*.spec.ts"],
-    "exec":"ts-node ./index.ts"
+  "watch": ["."],
+  "exp": "ts",
+  "ignore": ["**/*.spec.ts"],
+  "exec": "ts-node ./index.ts"
 }
