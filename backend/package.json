@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
       "build": "tsc",
-    "start": "nodemon",
+    "start": "node",
     "prisma:generate": "yarn prisma generate",
     "prisma:migrate": "yarn prisma migrate dev --name init"
   },
