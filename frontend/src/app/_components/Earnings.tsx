@@ -50,6 +50,7 @@ export const Earnings = () => {
       if (!userId) return;
 
       try {
+        const userId = localStorage.getItem("userId");
         const res = await axios.get(
           `http://localhost:8000/don/donation/rec/${userId}`
         );
@@ -104,8 +105,7 @@ export const Earnings = () => {
               {filteredDonations.map((el) => (
                 <div
                   key={el.id}
-                  className=" w-200 2xl:w-[835px] h-full flex flex-col justify-center  gap-5 p-5 "
-                >
+                  className=" w-200 2xl:w-[835px] h-full flex flex-col justify-center  gap-5 p-5 ">
                   <div className="h-[40px] flex justify-between items-center">
                     <div className="flex flex-row gap-3 ">
                       <img

@@ -73,6 +73,7 @@ export const ProfilePut = ({ userId }: ProfilePutProps) => {
     setCurrentUserId(storedId);
 
     const fetch = async () => {
+      const userId = localStorage.getItem("userId");
       if (!userId) return;
       try {
         const res = await axios.get(`http://localhost:8000/profiles/${userId}`);
@@ -133,8 +134,7 @@ export const ProfilePut = ({ userId }: ProfilePutProps) => {
           href={pro?.socialMediaURL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-blue-600 underline break-words"
-        >
+          className="text-sm text-blue-600 underline break-words">
           {pro?.socialMediaURL || "Not provided"}
         </a>
       </div>
@@ -156,8 +156,7 @@ export const ProfilePut = ({ userId }: ProfilePutProps) => {
             {showMore.map((el) => (
               <div
                 key={el.id}
-                className="flex flex-col justify-center gap-5 p-5"
-              >
+                className="flex flex-col justify-center gap-5 p-5">
                 <div className="flex flex-row gap-3">
                   <img
                     src={el.donor.profile.avatarImage}

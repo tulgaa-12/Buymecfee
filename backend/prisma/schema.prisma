@@ -56,7 +56,6 @@ model Donation {
   donorId                 Int
   recipient               User     @relation("ReceivedDonations", fields: [recipientId], references: [id])
   recipientId             Int
-  isPaid                  Boolean  @default(false)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 }
