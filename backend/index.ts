@@ -9,14 +9,7 @@ import { ProfileRouter } from "./route/profile";
 import { DonationRouter } from "./route/dontations";
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
+app.use(cors());
 dotenv.config();
 
 app.get("/qradonation", async (req, res) => {
