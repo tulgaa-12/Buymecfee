@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo 'Skip build step'",
-    "start": "ts-node ./index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "prisma:generate": "yarn prisma generate",
     "prisma:migrate": "yarn prisma migrate dev --name init"
   },
