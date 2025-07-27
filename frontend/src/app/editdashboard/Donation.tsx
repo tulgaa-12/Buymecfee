@@ -71,7 +71,7 @@ export const Donation = ({ userId }: ProfilePutProps) => {
       }
 
       const response = await axios.post(
-        `http://localhost:8000/don/donation/${storedId}`,
+        `https://buymecfee-e06t.onrender.com/don/donation/${storedId}`,
         {
           amount: Number(formData.amount),
           specialMessage: formData.specialMessage,
@@ -85,7 +85,9 @@ export const Donation = ({ userId }: ProfilePutProps) => {
         }
       );
 
-      const { data } = await axios.get(`http://localhost:8000/qradonation`);
+      const { data } = await axios.get(
+        `https://buymecfee-e06t.onrender.com/qradonation`
+      );
       setQr(data.qr);
 
       // setSuccess("Donation sent successfully!");
@@ -122,8 +124,7 @@ export const Donation = ({ userId }: ProfilePutProps) => {
             className={`w-[72px] bg-[#F4F4F5] ${
               formData.amount === el ? "border  border-[#18181B]" : ""
             }`}
-            onClick={() => handleAmountClick(el)}
-          >
+            onClick={() => handleAmountClick(el)}>
             <Coffee />${el}
           </Button>
         ))}
@@ -167,8 +168,7 @@ export const Donation = ({ userId }: ProfilePutProps) => {
                 !formData.amount ||
                 !formData.socialURLOrBuyMeACoffee ||
                 !formData.specialMessage
-              }
-            >
+              }>
               {loading ? "Uploading..." : "Save changes"}
             </Button>
           </DialogTrigger>

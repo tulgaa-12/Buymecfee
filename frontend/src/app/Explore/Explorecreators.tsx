@@ -37,7 +37,9 @@ export const Explorecreators = () => {
       const userId = localStorage.getItem("userId");
       if (!userId) return;
       try {
-        const res = await axios.get(`http://localhost:8000/getAllProfiles`);
+        const res = await axios.get(
+          `https://buymecfee-e06t.onrender.com/getAllProfiles`
+        );
         console.log("res.data", res.data);
 
         setUsers(res.data);
@@ -83,8 +85,7 @@ export const Explorecreators = () => {
           {filteredCreators.slice(0, 10).map((el) => (
             <div
               key={el.id}
-              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10"
-            >
+              className="shadow-md rounded-lg  border border-[#E4E4E7] p-8 flex flex-row gap-10">
               <div className="flex flex-col gap-5">
                 <div className="flex flex-row gap-3">
                   <img
@@ -113,8 +114,7 @@ export const Explorecreators = () => {
               <Link href={`/editdashboard/${el.userId}`}>
                 <Button
                   variant="outline"
-                  className="bg-[#F4F4F5] absolute right-40 2xl:right-65"
-                >
+                  className="bg-[#F4F4F5] absolute right-40 2xl:right-65">
                   View profile <ExternalLink />
                 </Button>
               </Link>

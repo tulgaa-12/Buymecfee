@@ -55,10 +55,13 @@ export const ForgetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.put("http://localhost:8000/user/forget", {
-        userId,
-        password: data.password,
-      });
+      const res = await axios.put(
+        "https://buymecfee-e06t.onrender.com/user/forget",
+        {
+          userId,
+          password: data.password,
+        }
+      );
 
       console.log(res.data);
     } catch (err) {

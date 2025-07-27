@@ -61,7 +61,7 @@ export const Default = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/getCompleteProfile/${userId}`
+          `https://buymecfee-e06t.onrender.com/getCompleteProfile/${userId}`
         );
         console.log("res.data", res.data);
         setPro(res.data);
@@ -78,7 +78,7 @@ export const Default = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/don/donation/rec/${userId}`
+          `https://buymecfee-e06t.onrender.com/don/donation/rec/${userId}`
         );
         console.log("res.data", res.data);
         setDon(res.data);

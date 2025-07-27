@@ -69,7 +69,7 @@ export const EditProfile = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/getCompleteProfile/${userId}`
+          `https://buymecfee-e06t.onrender.com/getCompleteProfile/${userId}`
         );
         setPro(res.data);
         setFormData({
@@ -98,7 +98,7 @@ export const EditProfile = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:8000/updateProfile/${userId}`,
+        `https://buymecfee-e06t.onrender.com/updateProfile/${userId}`,
         {
           ...formData,
           avatarImage: imageUrl,

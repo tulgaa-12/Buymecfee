@@ -96,7 +96,7 @@ export const CompleteProfile = ({ Next }: all) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/profile",
+        "https://buymecfee-e06t.onrender.com/profile",
         {
           name: values.name,
           about: values.about,

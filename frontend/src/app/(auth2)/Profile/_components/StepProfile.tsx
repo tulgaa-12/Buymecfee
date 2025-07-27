@@ -77,7 +77,7 @@ export const StepProfile = () => {
       const expiryDate = new Date(`${values.year}-${month}-01`);
 
       const res = await axios.post(
-        "http://localhost:8000/createBankCard",
+        "https://buymecfee-e06t.onrender.com/createBankCard",
         {
           country: values.select,
           firstName: values.firstname,

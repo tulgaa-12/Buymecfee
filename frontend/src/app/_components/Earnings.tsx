@@ -52,7 +52,7 @@ export const Earnings = () => {
       try {
         const userId = localStorage.getItem("userId");
         const res = await axios.get(
-          `http://localhost:8000/don/donation/rec/${userId}`
+          `https://buymecfee-e06t.onrender.com/don/donation/rec/${userId}`
         );
         setPro(res.data);
       } catch (error) {

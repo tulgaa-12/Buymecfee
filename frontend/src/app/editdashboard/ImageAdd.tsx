@@ -72,7 +72,7 @@ export const CoverImageUploader = () => {
       const userId = localStorage.getItem("userId");
 
       try {
-        await axios.post("http://localhost:8000/updatecover", {
+        await axios.post("https://buymecfee-e06t.onrender.com/updatecover", {
           userId,
           coverImageUrl: url,
         });
@@ -97,7 +97,7 @@ export const CoverImageUploader = () => {
 
       try {
         const res = await axios.get(
-          `http://localhost:8000/getCompleteProfile/${userId}`
+          `https://buymecfee-e06t.onrender.com/getCompleteProfile/${userId}`
         );
         const url = res.data.backgroundImage;
         if (url) setUploadedUrl(url);

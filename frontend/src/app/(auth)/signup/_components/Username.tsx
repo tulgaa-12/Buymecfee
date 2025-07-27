@@ -57,7 +57,7 @@ export const Username = ({ nextStep, usersname }: Next) => {
       };
 
       const response = await axios.post(
-        "http://localhost:8000/user/sign-up",
+        "https://buymecfee-e06t.onrender.com/user/sign-up",
         dataToSend
       );
 

@@ -43,7 +43,7 @@ export const DefaultHeader = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/getCompleteProfile/${userId}`
+          `https://buymecfee-e06t.onrender.com/getCompleteProfile/${userId}`
         );
         console.log("res.data", res.data);
         setPro(res.data);

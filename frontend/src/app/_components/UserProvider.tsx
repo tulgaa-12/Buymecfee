@@ -9,6 +9,7 @@ import {
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "../../config/api";
 
 type UserData = {
   userId: number;
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const tokenChecker = async (token: string) => {
     try {
-      const response = await axios.post("http://localhost:8000/user/verif", {
+      const response = await axios.post(`${API_BASE_URL}/user/verif`, {
         token: token,
       });
       setUser({

@@ -49,7 +49,7 @@ export const Payment = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/getbankcard/${userId}`
+          `https://buymecfee-e06t.onrender.com/getbankcard/${userId}`
         );
         const data = res.data;
         setPro(res.data);
@@ -88,7 +88,7 @@ export const Payment = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:8000/paymentupdate/${userId}`,
+        `https://buymecfee-e06t.onrender.com/paymentupdate/${userId}`,
         payload
       );
       setPro(res.data);

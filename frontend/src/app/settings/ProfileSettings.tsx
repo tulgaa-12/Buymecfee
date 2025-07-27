@@ -73,7 +73,7 @@ export const ProfileSettings = () => {
       if (!userId) return;
       try {
         const res = await axios.get(
-          `http://localhost:8000/getCompleteProfile/${userId}`
+          `https://buymecfee-e06t.onrender.com/getCompleteProfile/${userId}`
         );
         setPro(res.data);
         setValue("username", res.data.user.username);
@@ -100,7 +100,7 @@ export const ProfileSettings = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:8000/updateProfile/${userId}`,
+        `https://buymecfee-e06t.onrender.com/updateProfile/${userId}`,
         {
           ...data,
           avatarImage: imageUrl,
