@@ -16,6 +16,6 @@ UserRouter.post("/verif", verif);
 UserRouter.put("/forget", Forgetpassword);
 UserRouter.post("verify", protect);
 
-UserRouter.get("/profile", protect, (req, res) => {
+UserRouter.get("/profile", protect, (req: any, res: any) => {
   res.json({ user: req.user });
 });

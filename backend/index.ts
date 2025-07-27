@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
-app.get("/qradonation", async (req, res) => {
+app.get("/qradonation", async (req: Request, res: Response) => {
   const url = "https://www.instagram.com/chelseafc/";
 
   try {
