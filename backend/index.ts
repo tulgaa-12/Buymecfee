@@ -27,6 +27,8 @@ app.get("/qradonation", async (req, res) => {
 app.use("/user", UserRouter);
 app.use("/", ProfileRouter);
 app.use("/don", DonationRouter);
-app.listen(8000, () => {
-  console.log(`✅ Server is running on port 8000`);
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`✅ Server is running on port ${PORT}`);
 });

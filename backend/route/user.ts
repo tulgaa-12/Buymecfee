@@ -5,7 +5,6 @@ import { Hello, signup } from "../controller/user/signup";
 
 import { verif } from "../controller/user/verif";
 
-import { verify } from "crypto";
 import { Forgetpassword } from "../controller/user/forget";
 
 export const UserRouter = Router();
